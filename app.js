@@ -14,24 +14,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(customerRoute);
 
-app.get('/', async (req,res) => {
-    const { q } = req.query;
-    let sendData = [];
-    q ? q.split(' ').join('+') : 'internation+news';
-    await axios.get(`https://newsapi.org/v2/everything?apiKey=${process.env.API_KEY}&q=${q}`)
-    .then(response => {
-        let data = response.data.articles;
-        data.forEach(el => sendData.push({
-            author : el.author ? el.author : 'unknown',
-            title : el.title,
-            description : el.description,
-            url : el.url,
-            publishedAt : el.publishedAt
-        }))
-        res.status(200).send(sendData)
-    })
-    .catch(err => console.log(err))
-});
+// app.get('/', async (req,res) => {
+//     const { q } = req.query;
+//     q ? q.split(' ').join('+') : 'internation+news';
+//     await axios.get(`https://newsapi.org/v2/everything?apiKey=${process.env.API_KEY}&q=${q}`)
+//     .then(response => {
+//         let data = response.data.articles;
+//         res.status(200).send(data)
+//     })
+//     .catch(err => console.log(err))
+// });
 
 app.listen(3000);
 
